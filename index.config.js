@@ -1,556 +1,498 @@
-const process = globalThis.process?.env ? globalThis.process : { env: {} };
-let os = { networkInterfaces: () => ({}) };
-try { if (typeof require === 'function') os = require('node:os'); } catch { /* sandboxed host */ }
-
-
-const isIPv4 = (item) => {
-    if (!item) return false;
-    const family = typeof item.family === 'string' ? item.family : String(item.family || '');
-    return family === 'IPv4' || family === '4';
+// 迷你引擎配置（构建时生成，可读）
+module.exports = {
+  brand: "迷你猫源",
+  port: 8888,
+  sites: [
+    {
+      "key": "nodejs_douban_hot",
+      "name": "🔥热门·推荐",
+      "type": 3,
+      "api": "/spider/douban_hot/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1
+    },
+    {
+      "key": "nodejs_baseset",
+      "name": "⚙配置·中枢",
+      "type": 3,
+      "api": "/spider/baseset/3",
+      "searchable": 0,
+      "quickSearch": 0,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_wanou_pan",
+      "name": "🧸玩偶·4K",
+      "type": 3,
+      "api": "/spider/wanou_pan/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_muou_share",
+      "name": "🎭木偶·4K",
+      "type": 3,
+      "api": "/spider/muou_share/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_duoduo_pan",
+      "name": "☁️多多·4K",
+      "type": 3,
+      "api": "/spider/duoduo_pan/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_shandian_tv",
+      "name": "⚡闪电·4K",
+      "type": 3,
+      "api": "/spider/shandian_tv/3",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_pomo_pan",
+      "name": "💿原盘·4K",
+      "type": 3,
+      "api": "/spider/pomo_pan/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_huajuan_pan",
+      "name": "🥐花卷·4K",
+      "type": 3,
+      "api": "/spider/huajuan_pan/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_pianku_pan",
+      "name": "🧩片库·4K",
+      "type": 3,
+      "api": "/spider/pianku_pan/3",
+      "searchable": 0,
+      "quickSearch": 0,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_hongguo_node",
+      "name": "🍎红果 - 短剧",
+      "type": 3,
+      "api": "/spider/hongguo_node/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1
+    },
+    {
+      "key": "nodejs_xingya_short",
+      "name": "🌱星芽 - 短剧",
+      "type": 3,
+      "api": "/spider/xingya_short/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_huangguo_ai_local",
+      "name": "🍊黄果 - 短剧",
+      "type": 3,
+      "api": "/spider/huangguo_ai_local/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "adult": true
+    },
+    {
+      "key": "nodejs_duanju_bashi",
+      "name": "🎬短剧 - 巴士",
+      "type": 3,
+      "api": "/spider/duanju_bashi/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_duanju_daquan",
+      "name": "🎬短剧 - 大全",
+      "type": 3,
+      "api": "/spider/duanju_daquan/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_duoju_local_node",
+      "name": "🎬多源 - 短剧",
+      "type": 3,
+      "api": "/spider/duoju_local_node/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0,
+      "adult": true
+    },
+    {
+      "key": "nodejs_hema_duanju",
+      "name": "🦛河马 - 短剧",
+      "type": 3,
+      "api": "/spider/hema_duanju/3",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_hongdou_duanju",
+      "name": "🫘红豆 - 短剧",
+      "type": 3,
+      "api": "/spider/hongdou_duanju/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1
+    },
+    {
+      "key": "nodejs_asmrba",
+      "name": "🎧ASMR 吧 - 助眠",
+      "type": 3,
+      "api": "/spider/asmrba/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_xingmeng_asmr",
+      "name": "✨星梦 ASMR-S",
+      "type": 3,
+      "api": "/spider/xingmeng_asmr/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_ximalaya",
+      "name": "🏔喜马拉雅-听书",
+      "type": 3,
+      "api": "/spider/ximalaya/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_yueting",
+      "name": "🎧悦听 - 听书",
+      "type": 3,
+      "api": "/spider/yueting/3",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_tiantian_4k",
+      "name": "☀️天天 - 4K",
+      "type": 3,
+      "api": "/spider/tiantian_4k/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1
+    },
+    {
+      "key": "nodejs_yidong_4k",
+      "name": "♨️移动 - 4K",
+      "type": 3,
+      "api": "/spider/yidong_4k/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_fengye4k",
+      "name": "🍁枫叶 - 4K",
+      "type": 3,
+      "api": "/spider/fengye4k/3",
+      "searchable": 0,
+      "quickSearch": 0,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_juxiafan_4k",
+      "name": "🍚剧饭 - 4K",
+      "type": 3,
+      "api": "/spider/juxiafan_4k/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_tencent_video",
+      "name": "🐧腾讯- 4K",
+      "type": 3,
+      "api": "/spider/tencent_video/3",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_gulu_4k",
+      "name": "💧咕噜 - 4K",
+      "type": 3,
+      "api": "/spider/gulu_4k/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1
+    },
+    {
+      "key": "nodejs_juzi_4k",
+      "name": "🧃橘汁 - 4K",
+      "type": 3,
+      "api": "/spider/juzi_4k/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1
+    },
+    {
+      "key": "nodejs_guazi",
+      "name": "🌰瓜子 - 2K",
+      "type": 3,
+      "api": "/spider/guazi/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1
+    },
+    {
+      "key": "nodejs_youtube_video",
+      "name": "▶️YouTube",
+      "type": 3,
+      "api": "/spider/youtube_video/3",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_netflix_cat",
+      "name": "🌐飞猫- 极速",
+      "type": 3,
+      "api": "/spider/netflix_cat/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1
+    },
+    {
+      "key": "nodejs_xiaoyouzi",
+      "name": "🍊柚子 - 极速",
+      "type": 3,
+      "api": "/spider/xiaoyouzi/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1
+    },
+    {
+      "key": "nodejs_zhuijudaren",
+      "name": "🏆达人 - 极速",
+      "type": 3,
+      "api": "/spider/zhuijudaren/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1
+    },
+    {
+      "key": "nodejs_duse91",
+      "name": "🐍毒蛇- 极速",
+      "type": 3,
+      "api": "/spider/duse91/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_fenzhu",
+      "name": "🐷猪猪侠 - 极速",
+      "type": 3,
+      "api": "/spider/fenzhu/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1
+    },
+    {
+      "key": "nodejs_mengtaiqi",
+      "name": "🐺灰太狼 - 极速",
+      "type": 3,
+      "api": "/spider/mengtaiqi/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1
+    },
+    {
+      "key": "nodejs_nivod_fast",
+      "name": "📹泥视频 - 极速",
+      "type": 3,
+      "api": "/spider/nivod_fast/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_duboku",
+      "name": "📺独播库 - 极速",
+      "type": 3,
+      "api": "/spider/duboku/3",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 1
+    },
+    {
+      "key": "nodejs_duoduo_tv",
+      "name": "📺多多影视 - 极速",
+      "type": 3,
+      "api": "/spider/duoduo_tv/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1
+    },
+    {
+      "key": "nodejs_chabeihu",
+      "name": "🦊茶杯狐 - 极速",
+      "type": 3,
+      "api": "/spider/chabeihu/3",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_dshixiong_tv",
+      "name": "🚀师兄 - 极速",
+      "type": 3,
+      "api": "/spider/dshixiong_tv/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1
+    },
+    {
+      "key": "nodejs_zhenpin_video",
+      "name": "💎臻品 - 极速",
+      "type": 3,
+      "api": "/spider/zhenpin_video/3",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_wencaiyingshi",
+      "name": "📖文才 - 极速",
+      "type": 3,
+      "api": "/spider/wencaiyingshi/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1
+    },
+    {
+      "key": "nodejs_jisu_zhuiju",
+      "name": "📺追剧 - 极速",
+      "type": 3,
+      "api": "/spider/jisu_zhuiju/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_jianpian",
+      "name": "📽荐片- 极速",
+      "type": 3,
+      "api": "/spider/jianpian/3",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_rebo_fast",
+      "name": "🔥热播 - 极速",
+      "type": 3,
+      "api": "/spider/rebo_fast/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1
+    },
+    {
+      "key": "nodejs_linglingqi",
+      "name": "🕵️凌凌漆 - 极速",
+      "type": 3,
+      "api": "/spider/linglingqi/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1
+    },
+    {
+      "key": "nodejs_aikanbot",
+      "name": "🤖机器人 - 极速",
+      "type": 3,
+      "api": "/spider/aikanbot/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1
+    },
+    {
+      "key": "nodejs_kanju_ai",
+      "name": "🤖看剧 AI - 极速",
+      "type": 3,
+      "api": "/spider/kanju_ai/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_hudie_yingyuan",
+      "name": "🦋蝴蝶 - 影院",
+      "type": 3,
+      "api": "/spider/hudie_yingyuan/3",
+      "searchable": 0,
+      "quickSearch": 0,
+      "filterable": 0,
+      "adult": true
+    },
+    {
+      "key": "nodejs_xin6v",
+      "name": "🧲磁力- 极速",
+      "type": 3,
+      "api": "/spider/xin6v/3",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_dongman_bashi",
+      "name": "🚌动漫 - 巴士",
+      "type": 3,
+      "api": "/spider/dongman_bashi/3",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_bt_two",
+      "name": "🛜BT双站 - 极速",
+      "type": 3,
+      "api": "/spider/bt_two/3",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 0
+    },
+    {
+      "key": "nodejs_hqvod4k",
+      "name": "高清点播4K",
+      "type": 3,
+      "api": "/spider/hqvod4k/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1
+    }
+  ],
 };
 
-const isValidIPv4 = (ip) => {
-    const text = String(ip || '').trim();
-    if (!/^\d{1,3}(\.\d{1,3}){3}$/.test(text)) return false;
-    return text.split('.').every((part) => {
-        const value = Number(part);
-        return Number.isInteger(value) && value >= 0 && value <= 255;
-    });
-};
-
-const isPrivateIPv4 = (ip) =>
-    /^192\.168\./.test(ip) || /^10\./.test(ip) || /^172\.(1[6-9]|2\d|3[0-1])\./.test(ip);
-
-const isCgnatIPv4 = (ip) => /^100\.(6[4-9]|[7-9]\d|1[01]\d|12[0-7])\./.test(ip);
-
-const isReservedOrUnroutableIPv4 = (ip) => {
-    const text = String(ip || '').trim();
-    return (
-        /^0\./.test(text) ||
-        /^127\./.test(text) ||
-        /^169\.254\./.test(text) ||
-        /^192\.0\.0\./.test(text) ||
-        /^192\.0\.2\./.test(text) ||
-        /^198\.18\./.test(text) ||
-        /^198\.19\./.test(text) ||
-        /^198\.51\.100\./.test(text) ||
-        /^203\.0\.113\./.test(text) ||
-        /^22[4-9]\./.test(text) ||
-        /^23\d\./.test(text) ||
-        /^24\d\./.test(text) ||
-        /^25[0-5]\./.test(text)
-    );
-};
-
-const isLikelyCellularInterface = (name = '') => /(rmnet|ccmni|pdp|wwan|cell|mobile|clat|v4-rmnet)/i.test(name);
-const isLikelyLanInterface = (name = '') => /(wlan|wi-?fi|eth|en\d|lan|bridge)/i.test(String(name || ''));
-const isLikelyVirtualOrTunnelInterface = (name = '') =>
-    /(virtual|veth|vethernet|vmware|vbox|hyper-v|docker|podman|br-|wsl|utun|tun|tap|tailscale|zerotier|wireguard|wg|clash|mihomo|loopback|pseudo)/i.test(
-        String(name || '')
-    );
-
-const calcCandidateScore = (candidate) => {
-    let score = 0;
-    if (/^192\.168\./.test(candidate.ip)) score += 300;
-    else if (/^172\.(1[6-9]|2\d|3[0-1])\./.test(candidate.ip)) score += 260;
-    else if (/^10\./.test(candidate.ip)) score += 220;
-    else if (!isCgnatIPv4(candidate.ip)) score += 180;
-    if (isLikelyLanInterface(candidate.name)) score += 80;
-    if (isLikelyCellularInterface(candidate.name)) score -= 320;
-    if (isLikelyVirtualOrTunnelInterface(candidate.name)) score -= 260;
-    if (isCgnatIPv4(candidate.ip)) score -= 220;
-    return score;
-};
-
-function getIPAddress() {
-    const forcedIp = String(process.env.CATPAW_HOST_IP || process.env.HOST_IP || '').trim();
-    if (isValidIPv4(forcedIp)) return forcedIp;
-
-    const interfaces = os.networkInterfaces() || {};
-    const candidates = [];
-    Object.entries(interfaces).forEach(([name, items]) => {
-        if (!Array.isArray(items)) return;
-        items.forEach((item) => {
-            if (!isIPv4(item) || item.internal) return;
-            const ip = String(item.address || '').trim();
-            if (!ip || ip.startsWith('169.254.') || isReservedOrUnroutableIPv4(ip)) return;
-            candidates.push({ ip, name: String(name || '') });
-        });
-    });
-
-    const ranked = candidates
-        .map((candidate) => ({ ...candidate, score: calcCandidateScore(candidate) }))
-        .sort((a, b) => b.score - a.score);
-
-    const preferred = ranked.find((candidate) => {
-        return (
-            !isLikelyCellularInterface(candidate.name) &&
-            !isLikelyVirtualOrTunnelInterface(candidate.name) &&
-            !isCgnatIPv4(candidate.ip)
-        );
-    });
-    if (preferred) return preferred.ip;
-
-    const fallbackPrivate = ranked.find(
-        (candidate) =>
-            isPrivateIPv4(candidate.ip) &&
-            !isLikelyCellularInterface(candidate.name) &&
-            !isLikelyVirtualOrTunnelInterface(candidate.name)
-    );
-    if (fallbackPrivate) return fallbackPrivate.ip;
-
-    return '127.0.0.1';
-}
-
-
-
-const builtinDanmuAddress = `http://${getIPAddress()}:9321`;
-
-// 采集源写入 cms.list；douer 原样为每条注册一个「采」入口（不再聚合 cmshub）。
-const cmsSources = [];
-
-module.exports.default = {
-    lee: {
-        localRoot: process.env.CATPAW_LOCAL_ROOT || '',
-        guangyaSite: { cookie: process.env.CATPAW_GUANGYA_COOKIE || '', userAgent: process.env.CATPAW_GUANGYA_UA || '' },
-        kfForum: { urls: ['https://www.kfzy.net'], cookie: process.env.CATPAW_KF_COOKIE || '' },
-        pan123Forum: { urls: ['https://123panfx.com', 'https://pan1.me'], cookie: process.env.CATPAW_123_FORUM_COOKIE || '' },
-        misou: { urls: ['http://gesoso.fun', 'http://www.misoso.shop'] },
-        kuaiying: { urls: ['http://xsayang.fun', 'http://38.76.197.172:12521'] },
-        seedhub: { urls: ['https://sidhub.cc', 'https://seeduck.cc', 'https://hubdog.cc', 'http://104.243.25.80'] },
-        marketUrl: '',
-    },
-    ali: {
-        token: '',
-        prefix: '阿里',
-    },
-    quark: {
-        cookie: '',
-    },
-    uc: {
-        cookie: '',
-        token: '',
-        ut: '',
-    },
-    y115: {
-        cookie: '',
-        offline: {
-            savePath: '0',
-            pollAttempts: 6,
-            pollIntervalMs: 1500,
-        },
-    },
-    baidu: {
-        cookie: '',
-    },
-    tianyi: {
-        username: '',
-        password: '',
-    },
-    pan123: {
-        username: '',
-        password: '',
-    },
-    // 网盘站域名表对齐上游 douer / peekpro 包（引擎读 *.urls）
-    muou: {
-        urls: ['https://123.666291.xyz', 'https://666.666291.xyz', 'https://www.muoua.top', 'https://333.333291.xyz'],
-    },
-    wanou: {
-        urls: ['https://www.wogg.live', 'https://woggpan.888484.xyz'],
-    },
-    wogg: {
-        urls: ['https://www.wogg.live', 'https://woggpan.888484.xyz'],
-    },
-    leijing: {
-        urls: ['https://www.leijing1.com', 'https://leijing1.com', 'https://www.leijing.xyz'],
-    },
-    duoduo: {
-        urls: ['https://tv.yydsys.cc', 'https://tv.214521.xyz'],
-    },
-    zhizhen: {
-        urls: ['https://www.zhizhen8.click', 'https://www.mihdr.top'],
-    },
-    ouge: {
-        urls: ['https://woog.nxog.eu.org', 'https://woog.430520.xyz'],
-    },
-    labi: {
-        urls: ['http://tvpanpan.site', 'https://www.mmpanpan.site'],
-    },
-    huban: {
-        urls: ['http://xhban.xyz', 'http://38.76.197.172:16969'],
-    },
-    erxiao: {
-        urls: ['https://www.2xiaopan.one'],
-    },
-    shandian: {
-        urls: ['http://shandian.blog'],
-    },
-    tgsou: {
-        tgPic: true,
-        count: 0,
-        url: 'https://tgsou.lmentor.dpdns.org',
-        channelUsername:
-            'tgsearchers7,Aliyun_4K_Movies,Quark_Movies,shareAliyun,ydypzyfx,ucquark,xx123pan,Yingshifenxiang123',
-    },
-    pansou: {
-        url: 'https://so.hk.111651.xyz',
-        channels: '',
-        plugins: '',
-        cloudTypes: '',
-    },
-    tgchannel: {
-        url: 'https://t.me',
-        count: 4,
-        enableImage: true,
-        homeChannelUsername: ['tgsearchers7', 'douerpan'],
-        channelUsername: [
-            'Q66Share',
-            'alyp_TV',
-            'ucquark',
-            'tianyirigeng',
-            'Quark_Movies',
-            'shareAliyun',
-            'xx123pan',
-        ],
-        channelRemark: {
-            tgsearchers7: '资源宇宙',
-            douerpan: '豆儿盘',
-        },
-    },
-    tgfilebot: {
-        url: 'http://127.0.0.1:8080',
-        password: '',
-    },
-    sites: {
-        list: [],
-    },
-    pans: {
-        list: [],
-    },
-    danmu: {
-        urls: [{ address: builtinDanmuAddress, name: '内置弹幕', builtin: true }],
-        format: 'xml',
-        autoPush: true,
-        debug: false,
-    },
-    t4: {
-        list: [],
-    },
-    cms: {
-        list: cmsSources,
-    },
-    // 本地 JS spider：引擎支持 createSpider；默认关闭远程 urls，可按 docs 上传到 dir
-    customSpiders: {
-        enabled: false,
-        dir: '',
-        urls: [],
-        strict: false,
-        allowOverride: false,
-        cacheTtlMs: 5000,
-        factoryTimeoutMs: 10000,
-        urlTimeoutMs: 10000,
-    },
-    bilibili: {
-        cookie: '',
-        classes: '',
-    },
-    live2vod: {
-        sources: [
-            { name: 'IPTV', url: 'https://iptv-org.github.io/iptv/countries/cn.m3u', img: '' },
-            {
-                name: '范明明',
-                url: 'https://cdn.jsdelivr.net/gh/fanmingming/live@refs/heads/main/tv/m3u/ipv6.m3u',
-                img: '',
-            },
-            { name: '电视', url: 'https://cdn.jsdelivr.net/gh/YueChan/Live@refs/heads/main/GNTV.m3u', img: '' },
-            { name: '网络', url: 'https://cdn.jsdelivr.net/gh/fanmingming/live@refs/heads/main/tv/m3u/itv.m3u', img: '' },
-            { name: '体育', url: 'https://iptv-org.github.io/iptv/categories/sports.m3u', img: '' },
-            { name: '哔哩', url: 'https://sub.ottiptv.cc/bililive.m3u', img: '' },
-            { name: '虎牙', url: 'https://sub.ottiptv.cc/huyayqk.m3u', img: '' },
-            { name: '斗鱼', url: 'https://sub.ottiptv.cc/douyuyqk.m3u', img: '' },
-            { name: 'YY', url: 'https://sub.ottiptv.cc/yylunbo.m3u', img: '' },
-        ],
-        showMode: 'groups',
-        def_pic: 'https://ghproxy.net/https://raw.githubusercontent.com/hjdhnx/hipy-server/master/app/static/img/lives.jpg',
-    },
-    alist: [
-        { name: '🐉神族九帝', server: 'https://alist.shenzjd.com' },
-        { name: '💢repl', server: 'https://ali.liucn.repl.co' },
-    ],
-    color: [
-        {
-            light: {
-                bg: 'https://i2.100024.xyz/2024/01/13/pptcej.webp',
-                bgMask: '0x50ffffff',
-                primary: '0xff446732',
-                onPrimary: '0xffffffff',
-                primaryContainer: '0xffc5efab',
-                onPrimaryContainer: '0xff072100',
-                secondary: '0xff55624c',
-                onSecondary: '0xffffffff',
-                secondaryContainer: '0xffd9e7cb',
-                onSecondaryContainer: '0xff131f0d',
-                tertiary: '0xff386666',
-                onTertiary: '0xffffffff',
-                tertiaryContainer: '0xffbbebec',
-                onTertiaryContainer: '0xff002020',
-                error: '0xffba1a1a',
-                onError: '0xffffffff',
-                errorContainer: '0xffffdad6',
-                onErrorContainer: '0xff410002',
-                background: '0xfff8faf0',
-                onBackground: '0xff191d16',
-                surface: '0xfff8faf0',
-                onSurface: '0xff191d16',
-                surfaceVariant: '0xffe0e4d6',
-                onSurfaceVariant: '0xff191d16',
-                inverseSurface: '0xff2e312b',
-                inverseOnSurface: '0xfff0f2e7',
-                outline: '0xff74796d',
-                outlineVariant: '0xffc3c8bb',
-                shadow: '0xff000000',
-                scrim: '0xff000000',
-                inversePrimary: '0xffaad291',
-                surfaceTint: '0xff446732',
-            },
-            dark: {
-                bg: 'https://i2.100024.xyz/2024/01/13/pptg3z.webp',
-                bgMask: '0x50000000',
-                primary: '0xffaad291',
-                onPrimary: '0xff173807',
-                primaryContainer: '0xff2d4f1c',
-                onPrimaryContainer: '0xffc5efab',
-                secondary: '0xffbdcbb0',
-                onSecondary: '0xff283420',
-                secondaryContainer: '0xff3e4a35',
-                onSecondaryContainer: '0xffd9e7cb',
-                tertiary: '0xffa0cfcf',
-                onTertiary: '0xff003738',
-                tertiaryContainer: '0xff1e4e4e',
-                onTertiaryContainer: '0xffbbebec',
-                error: '0xffffb4ab',
-                onError: '0xff690005',
-                errorContainer: '0xff93000a',
-                onErrorContainer: '0xffffdad6',
-                background: '0xff11140e',
-                onBackground: '0xffe1e4d9',
-                surface: '0xff11140e',
-                onSurface: '0xffe1e4d9',
-                surfaceVariant: '0xff43483e',
-                onSurfaceVariant: '0xffe1e4d9',
-                inverseSurface: '0xffe1e4d9',
-                inverseOnSurface: '0xff2e312b',
-                outline: '0xff8d9286',
-                outlineVariant: '0xff43483e',
-                shadow: '0xff000000',
-                scrim: '0xff000000',
-                inversePrimary: '0xff446732',
-                surfaceTint: '0xffaad291',
-            },
-        },
-        {
-            light: {
-                bg: 'https://i2.100024.xyz/2024/01/13/pi2rpw.webp',
-                bgMask: '0x50ffffff',
-                primary: '0xff666014',
-                onPrimary: '0xffffffff',
-                primaryContainer: '0xffeee58c',
-                onPrimaryContainer: '0xff1f1c00',
-                secondary: '0xff625f42',
-                onSecondary: '0xffffffff',
-                secondaryContainer: '0xffe9e4be',
-                onSecondaryContainer: '0xff1e1c05',
-                tertiary: '0xff3f6654',
-                onTertiary: '0xffffffff',
-                tertiaryContainer: '0xffc1ecd5',
-                onTertiaryContainer: '0xff002114',
-                error: '0xffba1a1a',
-                onError: '0xffffffff',
-                errorContainer: '0xffffdad6',
-                onErrorContainer: '0xff410002',
-                background: '0xfffef9eb',
-                onBackground: '0xff1d1c14',
-                surface: '0xfffef9eb',
-                onSurface: '0xff1d1c14',
-                surfaceVariant: '0xffe7e3d0',
-                onSurfaceVariant: '0xff1d1c14',
-                inverseSurface: '0xff323128',
-                inverseOnSurface: '0xfff5f1e3',
-                outline: '0xff7a7768',
-                outlineVariant: '0xffcbc7b5',
-                shadow: '0xff000000',
-                scrim: '0xff000000',
-                inversePrimary: '0xffd1c973',
-                surfaceTint: '0xff666014',
-            },
-            dark: {
-                bg: 'https://i2.100024.xyz/2024/01/13/pi2reo.webp',
-                bgMask: '0x50000000',
-                primary: '0xffd1c973',
-                onPrimary: '0xff353100',
-                primaryContainer: '0xff4d4800',
-                onPrimaryContainer: '0xffeee58c',
-                secondary: '0xffcdc8a3',
-                onSecondary: '0xff333117',
-                secondaryContainer: '0xff4a482c',
-                onSecondaryContainer: '0xffe9e4be',
-                tertiary: '0xffa6d0b9',
-                onTertiary: '0xff0e3727',
-                tertiaryContainer: '0xff274e3d',
-                onTertiaryContainer: '0xffc1ecd5',
-                error: '0xffffb4ab',
-                onError: '0xff690005',
-                errorContainer: '0xff93000a',
-                onErrorContainer: '0xffffdad6',
-                background: '0xff14140c',
-                onBackground: '0xffe7e2d5',
-                surface: '0xff14140c',
-                onSurface: '0xffe7e2d5',
-                surfaceVariant: '0xff49473a',
-                onSurfaceVariant: '0xffe7e2d5',
-                inverseSurface: '0xffe7e2d5',
-                inverseOnSurface: '0xff323128',
-                outline: '0xff949181',
-                outlineVariant: '0xff49473a',
-                shadow: '0xff000000',
-                scrim: '0xff000000',
-                inversePrimary: '0xff666014',
-                surfaceTint: '0xffd1c973',
-            },
-        },
-        {
-            light: {
-                bg: 'https://i2.100024.xyz/2024/01/13/qrnuwt.webp',
-                bgMask: '0x50ffffff',
-                primary: '0xFF2B6C00',
-                onPrimary: '0xFFFFFFFF',
-                primaryContainer: '0xFFA6F779',
-                onPrimaryContainer: '0xFF082100',
-                secondary: '0xFF55624C',
-                onSecondary: '0xFFFFFFFF',
-                secondaryContainer: '0xFFD9E7CA',
-                onSecondaryContainer: '0xFF131F0D',
-                tertiary: '0xFF386666',
-                onTertiary: '0xFFFFFFFF',
-                tertiaryContainer: '0xFFBBEBEB',
-                onTertiaryContainer: '0xFF002020',
-                error: '0xFFBA1A1A',
-                onError: '0xFFFFFFFF',
-                errorContainer: '0xFFFFDAD6',
-                onErrorContainer: '0xFF410002',
-                background: '0xFFFDFDF5',
-                onBackground: '0xFF1A1C18',
-                surface: '0xFFFDFDF5',
-                onSurface: '0xFF1A1C18',
-                surfaceVariant: '0xFFE0E4D6',
-                onSurfaceVariant: '0xFF1A1C18',
-                inverseSurface: '0xFF2F312C',
-                onInverseSurface: '0xFFF1F1EA',
-                outline: '0xFF74796D',
-                outlineVariant: '0xFFC3C8BB',
-                shadow: '0xFF000000',
-                scrim: '0xFF000000',
-                inversePrimary: '0xFF8CDA60',
-                surfaceTint: '0xFF2B6C00',
-            },
-            dark: {
-                bg: 'https://i2.100024.xyz/2024/01/13/qrc37o.webp',
-                bgMask: '0x50000000',
-                primary: '0xFF8CDA60',
-                onPrimary: '0xFF133800',
-                primaryContainer: '0xFF1F5100',
-                onPrimaryContainer: '0xFFA6F779',
-                secondary: '0xFFBDCBAF',
-                onSecondary: '0xFF283420',
-                secondaryContainer: '0xFF3E4A35',
-                onSecondaryContainer: '0xFFD9E7CA',
-                tertiary: '0xFFA0CFCF',
-                onTertiary: '0xFF003737',
-                tertiaryContainer: '0xFF1E4E4E',
-                onTertiaryContainer: '0xFFBBEBEB',
-                error: '0xFFFFB4AB',
-                errorContainer: '0xFF93000A',
-                onError: '0xFF690005',
-                onErrorContainer: '0xFFFFDAD6',
-                background: '0xFF1A1C18',
-                onBackground: '0xFFE3E3DC',
-                outline: '0xFF8D9286',
-                onInverseSurface: '0xFF1A1C18',
-                inverseSurface: '0xFFE3E3DC',
-                inversePrimary: '0xFF2B6C00',
-                shadow: '0xFF000000',
-                surfaceTint: '0xFF8CDA60',
-                outlineVariant: '0xFF43483E',
-                scrim: '0xFF000000',
-                surface: '0xFF1A1C18',
-                onSurface: '0xFFC7C7C0',
-                surfaceVariant: '0xFF43483E',
-                onSurfaceVariant: '0xFFC7C7C0',
-            },
-        },
-    ],
-};
-// ===== 本地打包台 · 生成区开始（重新构建会覆盖，请勿手改） =====
-;(function (C) {
-  if (!C || typeof C !== 'object') return;
-  C.lee = C.lee || {};
-  C.lee.siteManifest = [{"key":"nodejs_douban","name":"🔥热门·推荐","enable":true},{"key":"nodejs_baseset","name":"⚙配置·中枢","enable":true},{"key":"nodejs_wanou","name":"🧸玩偶·4K","enable":true},{"key":"nodejs_muou","name":"🪆木偶·4K","enable":true},{"key":"nodejs_shandian","name":"🌩闪电·4K","enable":true},{"key":"nodejs_ouge","name":"「盘」欧歌","enable":true},{"key":"nodejs_huban","name":"🐯虎斑·4K","enable":true},{"key":"nodejs_woniu","name":"🐌蜗牛·4K","enable":true},{"key":"nodejs_libvio","name":"📡立播·4K","enable":true},{"key":"nodejs_pinglian","name":"「盘」盘链","enable":true},{"key":"nodejs_guanying","name":"🎬观影·4K","enable":true},{"key":"nodejs_guazi","name":"瓜子APP","enable":true},{"key":"nodejs_jianpian","name":"荐片","enable":true},{"key":"nodejs_xingya","name":"星芽短剧","enable":true},{"key":"nodejs_kafei","name":"咖啡","enable":true},{"key":"nodejs_lee_jike","name":"即刻 • 4K","enable":true},{"key":"nodejs_lee_aipan","name":"爱盼 • 4K","enable":true},{"key":"nodejs_lee_yidong4k","name":"🚀逸动·4K","enable":true},{"key":"nodejs_lee_huajuan","name":"🌸花卷·4K","enable":true},{"key":"nodejs_lee_4kmp","name":"4KMP","enable":true},{"key":"nodejs_lee_fengye4k","name":"枫叶4K","enable":true},{"key":"nodejs_lee_juxiafan4k","name":"剧下饭·4K","enable":true},{"key":"nodejs_lee_4k_yingshi","name":"4K影视·4K","enable":true},{"key":"nodejs_lee_gulu4k","name":"咕噜・4K","enable":true},{"key":"nodejs_lee_juzi4k","name":"橘汁・4K","enable":true},{"key":"nodejs_lee_hetun4k","name":"河豚4K","enable":true},{"key":"nodejs_aikanbot","name":"看剧AI·极速","enable":true,"api":"/spider/aikanbot/3","type":3,"searchable":1,"quickSearch":1,"filterable":1},{"key":"nodejs_hongguo_node","name":"🍎红果·短剧","enable":true,"api":"/spider/hongguo_node/3","type":3,"searchable":1,"quickSearch":1,"filterable":1},{"key":"nodejs_youtube_video","name":"▶️YouTube・视频","enable":true,"api":"/spider/youtube_video/3","type":3,"searchable":1,"quickSearch":0,"filterable":0},{"key":"nodejs_xingmeng_asmr","name":"🌙星梦・助眠[S]","enable":true,"api":"/spider/xingmeng_asmr/3","type":3,"searchable":1,"quickSearch":1,"filterable":0},{"key":"nodejs_rebo_fast","name":"⚡热播·极速","enable":true,"api":"/spider/rebo_fast/3","type":3,"searchable":1,"quickSearch":1,"filterable":1},{"key":"nodejs_duse91","name":"🐍91毒蛇·极速","enable":true,"api":"/spider/duse91/3","type":3,"searchable":1,"quickSearch":1,"filterable":0},{"key":"nodejs_asmrba","name":"🎧ASMR 吧・助眠","enable":true,"api":"/spider/asmrba/3","type":3,"searchable":1,"quickSearch":1,"filterable":0},{"key":"nodejs_bt_two","name":"🎬BT双站.极速","enable":true,"api":"/spider/bt_two/3","type":3,"searchable":1,"quickSearch":0,"filterable":0},{"key":"nodejs_juxiafan_4k","name":"🍚剧下饭・4K","enable":true,"api":"/spider/juxiafan_4k/3","type":3,"searchable":1,"quickSearch":1,"filterable":0},{"key":"nodejs_dongman_bashi","name":"动漫巴士","enable":true,"api":"/spider/dongman_bashi/3","type":3,"searchable":1,"quickSearch":0,"filterable":0},{"key":"nodejs_gulu_4k","name":"咕噜4K","enable":true,"api":"/spider/gulu_4k/3","type":3,"searchable":1,"quickSearch":1,"filterable":1},{"key":"nodejs_ximalaya","name":"🏔喜马拉雅・听书","enable":true,"api":"/spider/ximalaya/3","type":3,"searchable":1,"quickSearch":1,"filterable":0},{"key":"nodejs_duoduo_tv","name":"🎁多多·极速","enable":true,"api":"/spider/duoduo_tv/3","type":3,"searchable":1,"quickSearch":1,"filterable":1},{"key":"nodejs_tiantian_4k","name":"🌞天天・4K","enable":true,"api":"/spider/tiantian_4k/3","type":3,"searchable":1,"quickSearch":1,"filterable":1},{"key":"nodejs_yingju4k","name":"🎬影剧・4K","enable":true,"api":"/spider/yingju4k/3","type":3,"searchable":1,"quickSearch":1,"filterable":1},{"key":"nodejs_yueting","name":"📖悦听・听书","enable":true,"api":"/spider/yueting/3","type":3,"searchable":1,"quickSearch":1,"filterable":0},{"key":"nodejs_xin6v","name":"🧲6V·磁力","enable":true,"api":"/spider/xin6v/3","type":3,"searchable":1,"quickSearch":0,"filterable":0},{"key":"nodejs_xingya_short","name":"🌱星芽·短剧","enable":true,"api":"/spider/xingya_short/3","type":3,"searchable":1,"quickSearch":1,"filterable":1},{"key":"nodejs_jisu_zhuiju","name":"🚀极速・追剧","enable":true,"api":"/spider/jisu_zhuiju/3","type":3,"searchable":1,"quickSearch":1,"filterable":0},{"key":"nodejs_fengye4k","name":"🍁枫叶・4K","enable":true,"api":"/spider/fengye4k/3","type":3,"searchable":1,"quickSearch":1,"filterable":0},{"key":"nodejs_juzi_4k","name":"🍊橘汁・4K","enable":true,"api":"/spider/juzi_4k/3","type":3,"searchable":1,"quickSearch":1,"filterable":1},{"key":"nodejs_hema_duanju","name":"🦛河马・短剧","enable":true,"api":"/spider/hema_duanju/3","type":3,"searchable":1,"quickSearch":0,"filterable":0},{"key":"nodejs_nivod_fast","name":"📹泥视频·极速","enable":true,"api":"/spider/nivod_fast/3","type":3,"searchable":1,"quickSearch":1,"filterable":0},{"key":"nodejs_duboku","name":"🎯独播·极速","enable":true,"api":"/spider/duboku/3","type":3,"searchable":1,"quickSearch":0,"filterable":1},{"key":"nodejs_kanju_ai","name":"🤖看剧AI·极速","enable":true,"api":"/spider/kanju_ai/3","type":3,"searchable":1,"quickSearch":1,"filterable":0},{"key":"nodejs_duanju_daquan","name":"📚大全・短剧","enable":true,"api":"/spider/duanju_daquan/3","type":3,"searchable":1,"quickSearch":1,"filterable":0},{"key":"nodejs_duanju_bashi","name":"🚌巴士・动漫","enable":true,"api":"/spider/duanju_bashi/3","type":3,"searchable":1,"quickSearch":1,"filterable":0},{"key":"nodejs_yidong_4k","name":"📱移动・4K","enable":true,"api":"/spider/yidong_4k/3","type":3,"searchable":1,"quickSearch":1,"filterable":0},{"key":"nodejs_hongdou_duanju","name":"🫘红豆・短剧","enable":true,"api":"/spider/hongdou_duanju/3","type":3,"searchable":1,"quickSearch":1,"filterable":1},{"key":"nodejs_netflix_cat","name":"🌐网飞·极速","enable":true,"api":"/spider/netflix_cat/3","type":3,"searchable":1,"quickSearch":1,"filterable":1},{"key":"nodejs_tencent_video","name":"🐧腾讯・4K","enable":true,"api":"/spider/tencent_video/3","type":3,"searchable":1,"quickSearch":0,"filterable":1},{"key":"nodejs_zhenpin_video","name":"💎臻品·极速","enable":true,"api":"/spider/zhenpin_video/3","type":3,"searchable":1,"quickSearch":0,"filterable":1},{"key":"nodejs_chabeihu","name":"🦊茶杯狐·极速","enable":true,"api":"/spider/chabeihu/3","type":3,"searchable":1,"quickSearch":0,"filterable":0},{"key":"nodejs_jianpian_you","name":"📽荐片·极速","enable":true,"api":"/spider/jianpian_you/3","type":3,"searchable":1,"quickSearch":0,"filterable":1},{"key":"nodejs_duoju_local_node","name":"多聚短剧(Node精简版)","enable":true,"api":"/spider/duoju_local_node/3","type":3,"searchable":1,"quickSearch":1,"filterable":1},{"key":"nodejs_hudie_yingyuan","name":"蝴蝶影院","enable":true,"api":"/spider/hudie_yingyuan/3","type":3,"searchable":0,"quickSearch":0,"filterable":0},{"key":"nodejs_huangguo_ai_local","name":"黄果AI本地","enable":true,"api":"/spider/huangguo_ai_local/3","type":3,"searchable":1,"quickSearch":1,"filterable":1},{"key":"nodejs_4kzn","name":"","enable":false},{"key":"nodejs_zhizhen","name":"「盘」至臻","enable":false},{"key":"nodejs_erxiao","name":"「盘」二小","enable":false},{"key":"nodejs_xiaoban","name":"「盘」小斑","enable":false},{"key":"nodejs_lee_guangya_site","name":"光鸭 • 臻影社","enable":false},{"key":"nodejs_lee_kf","name":"夸父 • 4K","enable":false},{"key":"nodejs_lee_123forum","name":"123 • 4K","enable":false},{"key":"nodejs_lee_kuaiying","name":"快映 • 4K","enable":false},{"key":"nodejs_lee_seedhub","name":"种子 • 4K","enable":false},{"key":"nodejs_lee_hqvod4k","name":"高清点播4K","enable":false},{"key":"nodejs_labi","name":"「盘」蜡笔","enable":false},{"key":"nodejs_duoduo","name":"「盘」多多","enable":false},{"key":"nodejs_bdjuhe","name":"「盘」综合","enable":false},{"key":"nodejs_tgchannel","name":"「盘」TG搜","enable":false},{"key":"nodejs_pansou","name":"「盘」PanSou","enable":false},{"key":"nodejs_123ypzysq","name":"「盘」123社区","enable":false},{"key":"nodejs_cloudseekr","name":"「盘」CLOUDSEEK","enable":false},{"key":"nodejs_fenxiang","name":"「盘」分享","enable":false},{"key":"nodejs_myquark","name":"「盘」夸克","enable":false},{"key":"nodejs_myali","name":"「盘」阿里","enable":false},{"key":"nodejs_mytianyi","name":"「盘」天翼","enable":false},{"key":"nodejs_mybaidu","name":"「盘」百度","enable":false},{"key":"nodejs_myguangyapan","name":"「盘」光鸭","enable":false},{"key":"nodejs_my115","name":"「盘」115","enable":false},{"key":"nodejs_my123","name":"「盘」123","enable":false},{"key":"nodejs_doubi","name":"「直」豆哔","enable":false},{"key":"nodejs_live2vod","name":"「直」直播","enable":false},{"key":"nodejs_push","name":"推送","enable":false},{"key":"nodejs_alist_alist_default","name":"「直」亿苯正经的Alist库","enable":false},{"key":"nodejs_lee_myuc","name":"UC • 网盘","enable":false},{"key":"nodejs_lee_myxunlei","name":"迅雷 • 云盘","enable":false},{"key":"nodejs_lee_local","name":"本地 • 视频","enable":false},{"key":"nodejs_lee_baiku","name":"百酷 • 搜索","enable":false},{"key":"nodejs_lee_kule","name":"酷乐 • 搜索","enable":false},{"key":"nodejs_lee_guigui","name":"鬼鬼 • 搜索","enable":false},{"key":"nodejs_lee_qupanso","name":"趣盘 • 搜索","enable":false},{"key":"nodejs_lee_misou","name":"米搜 • 搜索","enable":false},{"key":"nodejs_lee_juheso","name":"聚合 • 搜索","enable":false},{"key":"nodejs_kan360","name":"360极速","enable":true,"api":"/spider/kan360/3","type":3,"searchable":1,"quickSearch":1,"filterable":0}];
-  C.lee.adultKeys = [];
-  C.danmu = C.danmu || {}; C.danmu.autoPush = true;
-  C.live2vod = C.live2vod || {}; C.live2vod.sources = [{"name":"范明明","url":"https://cdn.jsdelivr.net/gh/fanmingming/live@refs/heads/main/tv/m3u/ipv6.m3u","img":""},{"name":"电视","url":"https://cdn.jsdelivr.net/gh/YueChan/Live@refs/heads/main/GNTV.m3u","img":""},{"name":"网络","url":"https://cdn.jsdelivr.net/gh/fanmingming/live@refs/heads/main/tv/m3u/itv.m3u","img":""},{"name":"体育","url":"https://iptv-org.github.io/iptv/categories/sports.m3u","img":""},{"name":"哔哩","url":"https://sub.ottiptv.cc/bililive.m3u","img":""},{"name":"虎牙","url":"https://sub.ottiptv.cc/huyayqk.m3u","img":""},{"name":"斗鱼","url":"https://sub.ottiptv.cc/douyuyqk.m3u","img":""},{"name":"YY","url":"https://sub.ottiptv.cc/yylunbo.m3u","img":""}];
-  C.alist = [{"name":"🐉神族九帝","server":"https://alist.shenzjd.com"}];
-  C.customSpiders = C.customSpiders || {};
-  C.customSpiders.enabled = false;
-  C.customSpiders.urls = [];
-  C.muou = C.muou || {};
-  C.muou.urls = ["https://123.666291.xyz","https://666.666291.xyz","https://www.muoua.top","https://333.333291.xyz"];
-  C.wanou = C.wanou || {};
-  C.wanou.urls = ["https://www.wogg.live","https://woggpan.888484.xyz"];
-  C.wogg = C.wogg || {};
-  C.wogg.urls = ["https://www.wogg.live","https://woggpan.888484.xyz"];
-  C.leijing = C.leijing || {};
-  C.leijing.urls = ["https://www.leijing1.com","https://leijing1.com","https://www.leijing.xyz"];
-  C.duoduo = C.duoduo || {};
-  C.duoduo.urls = ["https://tv.yydsys.cc","https://tv.214521.xyz"];
-  C.zhizhen = C.zhizhen || {};
-  C.zhizhen.urls = ["https://www.zhizhen8.click","https://www.mihdr.top"];
-  C.ouge = C.ouge || {};
-  C.ouge.urls = ["https://woog.nxog.eu.org","https://woog.430520.xyz"];
-  C.labi = C.labi || {};
-  C.labi.urls = ["http://tvpanpan.site","https://www.mmpanpan.site"];
-  C.huban = C.huban || {};
-  C.huban.urls = ["http://xhban.xyz","http://38.76.197.172:16969"];
-  C.erxiao = C.erxiao || {};
-  C.erxiao.urls = ["https://www.2xiaopan.one"];
-  C.shandian = C.shandian || {};
-  C.shandian.urls = ["http://shandian.blog"];
-  C.lee = C.lee || {};
-  C.lee.kfForum = C.lee.kfForum || {};
-  C.lee.kfForum.urls = ["https://www.kfzy.net"];
-  C.lee = C.lee || {};
-  C.lee.pan123Forum = C.lee.pan123Forum || {};
-  C.lee.pan123Forum.urls = ["https://123panfx.com","https://pan1.me"];
-  C.lee = C.lee || {};
-  C.lee.misou = C.lee.misou || {};
-  C.lee.misou.urls = ["http://gesoso.fun","http://www.misoso.shop"];
-  C.lee = C.lee || {};
-  C.lee.kuaiying = C.lee.kuaiying || {};
-  C.lee.kuaiying.urls = ["http://xsayang.fun","http://38.76.197.172:12521"];
-  C.lee = C.lee || {};
-  C.lee.seedhub = C.lee.seedhub || {};
-  C.lee.seedhub.urls = ["https://sidhub.cc","https://seeduck.cc","https://hubdog.cc","http://104.243.25.80"];
-  C.tgsou = C.tgsou || {};
-  C.tgsou.url = "https://tgsou.lmentor.dpdns.org";
-  C.pansou = C.pansou || {};
-  C.pansou.url = "https://so.hk.111651.xyz";
-  C.tgfilebot = C.tgfilebot || {};
-  C.tgfilebot.url = "http://127.0.0.1:8080";
-  C.uc = C.uc || {}; C.uc.cookie = "";
-  C.quark = C.quark || {}; C.quark.cookie = "";
-  C.y115 = C.y115 || {}; C.y115.cookie = "";
-  C.baidu = C.baidu || {}; C.baidu.cookie = "";
-  C.tianyi = C.tianyi || {}; C.tianyi.username = ""; C.tianyi.password = "";
-  C.pan123 = C.pan123 || {}; C.pan123.username = ""; C.pan123.password = "";
-  C.ali = C.ali || {}; C.ali.token = "";
-})(typeof module !== 'undefined' && module.exports ? module.exports.default || module.exports : (typeof globalThis !== 'undefined' ? globalThis.index_config : null));
-// ===== 本地打包台 · 生成区结束 =====
+globalThis.__MINI_CONFIG__ = module.exports;
