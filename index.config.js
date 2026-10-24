@@ -1,6 +1,6 @@
 // 迷你引擎配置（构建时生成，可读）
 module.exports = {
-  brand: "迷你猫源",
+  brand: "我的猫源",
   port: 8888,
   sites: [
     {
