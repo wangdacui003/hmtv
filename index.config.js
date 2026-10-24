@@ -1,6 +1,6 @@
 // 迷你引擎配置（构建时生成，可读）
 module.exports = {
-  brand: "我的猫源",
+  brand: "迷你猫源",
   port: 8888,
   sites: [
     {
@@ -429,6 +429,15 @@ module.exports = {
       "filterable": 1
     },
     {
+      "key": "nodejs_netflixgc",
+      "name": "🛜奈飞- 极速",
+      "type": 3,
+      "api": "/spider/netflixgc/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
       "key": "nodejs_linglingqi",
       "name": "🕵️凌凌漆 - 极速",
       "type": 3,
@@ -490,15 +499,6 @@ module.exports = {
       "api": "/spider/bt_two/3",
       "searchable": 1,
       "quickSearch": 0,
-      "filterable": 0
-    },
-    {
-      "key": "nodejs_netflixgc",
-      "name": "奈飞工厂",
-      "type": 3,
-      "api": "/spider/netflixgc/3",
-      "searchable": 1,
-      "quickSearch": 1,
       "filterable": 0
     }
   ],
