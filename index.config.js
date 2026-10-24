@@ -258,6 +258,15 @@ module.exports = {
       "filterable": 1
     },
     {
+      "key": "nodejs_hqvod4k",
+      "name": "📺点播 - 4K",
+      "type": 3,
+      "api": "/spider/hqvod4k/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1
+    },
+    {
       "key": "nodejs_guazi",
       "name": "🌰瓜子 - 2K",
       "type": 3,
@@ -482,15 +491,6 @@ module.exports = {
       "searchable": 1,
       "quickSearch": 0,
       "filterable": 0
-    },
-    {
-      "key": "nodejs_hqvod4k",
-      "name": "高清点播4K",
-      "type": 3,
-      "api": "/spider/hqvod4k/3",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1
     }
   ],
 };
