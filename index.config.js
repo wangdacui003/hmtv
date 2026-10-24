@@ -491,6 +491,15 @@ module.exports = {
       "searchable": 1,
       "quickSearch": 0,
       "filterable": 0
+    },
+    {
+      "key": "nodejs_netflixgc",
+      "name": "奈飞工厂",
+      "type": 3,
+      "api": "/spider/netflixgc/3",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
     }
   ],
 };
