@@ -1,6 +1,6 @@
 // 迷你引擎配置（构建时生成，可读）
 module.exports = {
-  brand: "我的猫源",
+  brand: "迷你猫源",
   port: 8888,
   sites: [
     {
@@ -129,16 +129,6 @@ module.exports = {
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 0
-    },
-    {
-      "key": "nodejs_duoju_local_node",
-      "name": "🎬多源 - 短剧",
-      "type": 3,
-      "api": "/spider/duoju_local_node/3",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 0,
-      "adult": true
     },
     {
       "key": "nodejs_hema_duanju",
@@ -447,15 +437,6 @@ module.exports = {
       "filterable": 1
     },
     {
-      "key": "nodejs_aikanbot",
-      "name": "🤖机器人 - 极速",
-      "type": 3,
-      "api": "/spider/aikanbot/3",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1
-    },
-    {
       "key": "nodejs_kanju_ai",
       "name": "🤖看剧 AI - 极速",
       "type": 3,
@@ -488,15 +469,6 @@ module.exports = {
       "name": "🚌动漫 - 巴士",
       "type": 3,
       "api": "/spider/dongman_bashi/3",
-      "searchable": 1,
-      "quickSearch": 0,
-      "filterable": 0
-    },
-    {
-      "key": "nodejs_bt_two",
-      "name": "🛜BT双站 - 极速",
-      "type": 3,
-      "api": "/spider/bt_two/3",
       "searchable": 1,
       "quickSearch": 0,
       "filterable": 0
